@@ -10,12 +10,11 @@ Each burger in the waiting area also has a Devour it! button. When the user clic
 
 
 Your app will store every burger in a database, whether devoured or not.
-
-##Usage:
+## Usage:
 By pulling up the website using the deployed heroku app, the user can input the type of burger they want and see it get pushed to the "Burgers Ready" list with an option to "Eat It!", once devoured, the burger will change to the "Devoured Burgers" list.
 
 
-##Contributing:
+## Contributing:
 Using 13-MVC\01-Activities\17-CatsApp\Solved as a template and reorganized the data and functions to better match what was required.Used information from all of 13-MVC as a guide and help to complete this task.
 
 
