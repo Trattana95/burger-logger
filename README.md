@@ -1,4 +1,6 @@
 # burger-logger
+Deployed heroku https://infinite-dawn-87221.herokuapp.com/
+
 
 Burger logger is a restaurant app that lets users input the names of burgers they'd like to eat.
 
