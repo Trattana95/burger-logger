@@ -1,88 +1,45 @@
-//
-// Javascript/jQuery for making AJAX calls
-//
+// make sure that everything loads first
+$(function () {
+    // on submitting the create-form, a newBurger is made using the value in the input area
+    $(".create-form").on("submit", function (event) {
+        event.preventDefault();
 
+        var newBurger = {
+            // Link to handlebars form as "newburger"
+            burger_name: $("#newburger").val().trim(),
+            devoured: 0
+        };
 
-//
-// Add a new burger
-//
-$("#add-burger").on("submit", function (event) {
-    event.preventDefault();
+        // POST request.
+        $.ajax("/api/burgers", {
+            type: "POST",
+            data: newBurger
+        }).then(
+            function () {
+                console.log("Here's your new burger!");
+                // Reload the page to get the updated list
+                location.reload();
+            }
+        );
+    });
+    // Clicking the "devour it" button
+    $(".devourit").on("click", function (event) {
+        var id = $(this).data("id");
+        // Changes the devoured value to true (1)
+        var isDvoured = {
+            devoured: 1
+        };
 
-    // Get the name of the new burger
-    const aBurger = {
-        burgerName: $("#burger").val().trim(),
-    };
-
-    // Send the POST request.
-    $.ajax("/add", {
-        type: "POST",
-        data: aBurger
-    }).then(
-        function (res) {
-            $("#burger").val("");
-            console.log("Added a burger");
-            // Reload the page to get the updated list
-            location.reload();
-        }
-    );
+        // Send the PUT request.
+        $.ajax("/api/burgers/" + id, {
+            type: "PUT",
+            data: isDvoured
+        }).then(
+            function () {
+                console.log("changed devoured to", isDvoured);
+                // Reload the page to get the updated list
+                location.reload();
+            }
+        );
+    });
 });
-
-//
-// Devour a burger on button click
-//
-$(".devour").on("click", function (event) {
-    event.preventDefault();
-
-    // Find the "id" of this burger to devour
-    const burgerId = $(this).attr("burgerId");
-    const aBurger = {
-        devoured: true
-    };
-
-    // Send the PUT request.
-    $.ajax("/devour/" + burgerId, {
-        type: "PUT",
-        data: aBurger
-    }).then(res => {
-        console.log("burger id(" + burgerId + ") is eaten");
-        // Reload the page to get the updated list
-        location.reload();
-    })
-        .catch(error => {
-            console.log(error);
-            // Hopefully still able to recover gracefully... 
-            location.reload();
-        });
-});
-
-//
-// Remove a burger on button click
-//
-$(".remove").on("click", function (event) {
-    event.preventDefault();
-
-    // Find the "id" of this burger to be removed
-    const burgerId = $(this).attr("burgerId");
-    const aBurger = {
-        devoured: true
-    };
-
-    // Send the DELETE request.
-    $.ajax("/remove/" + burgerId, {
-        type: "DELETE",
-        data: aBurger
-    }).then(res => {
-        console.log("burger id(" + burgerId + ") is removed");
-        // Reload the page to get the updated list
-        location.reload();
-    })
-        .catch(error => {
-            console.log(error);
-            // Hopefully still able to recover gracefully... 
-            location.reload();
-        });
-});
-
-
-
